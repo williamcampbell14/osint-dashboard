@@ -5,169 +5,89 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>OSINT Dashboard</title>
     <link rel="stylesheet" href="static/styles.css" />
-    <link href="https://fonts.cdnfonts.com/css/segoe-ui-4" rel="stylesheet" />
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5642728784073260"
-     crossorigin="anonymous"></script>
   </head>
   <body>
-    <div class="container">
-      {% include 'header.html' %}
+    <main class="wrapper">
+        <div class="header">
+            <div class="container">
+                <a href="{{ url_for('index') }}" text-decoration: none; font-weight: bold;>OSINT Dashboard</a>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="column">
+                    <form>
+                        <fieldset>
+                        <label for="userURL">URL Analysis</label>
+                        <p>
+                            Obtain IP, server, domain, and DNS details, along with other
+                            important information, given a URL address. Assess the credibility of a
+                            URL by identifying its various sources, as well as the information
+                            that appears on the website. Any full-length URL is supported.
+                        </p>
+                        <div class="input-container">
 
-      <div class="blurb"></div>
+                            <input type="text" placeholder="https://example.com" id="userURL">
 
-      <div class="inputs">
-        <form
-          id="webForm"
-          method="POST"
-          action="/web_tool"
-          autocomplete="off"
-          onsubmit="showLoadingScreen(); startQuoteCycle();"
-        >
-          <div class="input-container">
-            <h2>URL Analysis</h2>
-            <br />
-            <p>
-              Obtain IP, server, domain, and DNS details, along with other
-              important information, given a URL. Assess the credibility of a
-              URL by identifying its various sources, as well as the information
-              that appears on the website. Any full-length URL is supported.
-            </p>
+                            <input class="button-primary" type="submit" value="Send">
+                        </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="column">
+                    <form>
+                        <fieldset>
+                        <label for="exifFile">EXIF Viewer</label>
+                        <p>
+                            Extract Exif data from an uploaded image. This information can
+                            contain a wide of information, such as camera settings,
+                            date and time information, GPS data, and other descriptive
+                            information. Note that this data can be stripped when transferred
+                            accross applications.
+                        </p>
+                        <div class="input-container">
+                            <input type="file" id="exifFile" accept=".jpg,.jpeg,.png,.gif,.tiff">
+                            <input class="button-primary" type="submit" value="Send">
+                        </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="column">
+                    <form>
+                        <fieldset>
+                        <label for="userPhone">Phone Number Analysis</label>
+                        <p>
+                            Recieve location, carrier, and user information associated with
+                            any phone number. Identify telecommunication providers that offer
+                            Voice over IP (VoIP) numbers, which are often used by scammers.
+                            Our phone lookup tool also supports international numbers.
+                        </p>
+                        <div class="input-container">
+                            <input type="tel" placeholder="16055551234" id="userPhone">
+                            <input class="button-primary" type="submit" value="Send">
+                        </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+            <div class="footer">
+                <div class="container">
+                    <p>
+                        OSINT Dashboard was developed by Andrew Flora, William Campbell, and
+                        Santiago Colla.<br />
+                        Github:
+                        <b>
+                            <a
+                            href="https://github.com/campwill/osint-dashboard"
+                            style="text-decoration: none; font-weight: bold"
+                            >OSINT Dashboard</a>
+                        </b>
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+    </main>
 
-            <label for="web_input">Enter a Website URL:</label>
-
-            <input
-              type="url"
-              name="web_input"
-              id="web_input"
-              placeholder="https://example.com/"
-              pattern="https?:\/\/(www\.)?.+\..+"
-              style="border: 1px solid; border-radius: 4px"
-              required
-            />
-            <button type="submit">Go</button>
-          </div>
-        </form>
-        <form action="/upload" method="post" enctype="multipart/form-data">
-          <div class="input-container">
-            <h2>Exif Viewer</h2>
-            <br />
-            <p>
-              Extract Exif data from an uploaded image. This information can
-              contain a wide variety of information, such as camera settings,
-              date and time information, GPS data, and other descriptive
-              information. Note that this data can be stripped when transferred
-              accross applications.
-            </p>
-            <label for="fileToUpload">Upload an Image:</label>
-            <input
-              class="form-control"
-              type="file"
-              name="fileToUpload"
-              onchange="checkFileSize(this)"
-              accept=".jpg,.jpeg,.png,.gif,.tiff"
-              id="file"
-              style="border: 1px solid; border-radius: 4px"
-              required
-            />
-            <button type="analyze">Go</button>
-          </div>
-        </form>
-
-        <form method="POST" action="/pid_tool" autocomplete="off">
-          <div class="input-container">
-            <h2>Phone Lookup</h2>
-            <br />
-            <p>
-              Recieve location, carrier, and user information associated with
-              any phone number. Identify telecommunication provider that offer
-              Voice over IP (VoIP) numbers, which are often used by scammers.
-              Our phone lookup tool also supports international numbers.
-            </p>
-            <label for="phone_input">Enter a Phone Number:</label>
-            <input
-              type="tel"
-              name="phone_input"
-              id="phone_input"
-              placeholder="16055551234"
-              title="Please enter only numeric digits"
-              style="border: 1px solid; border-radius: 4px"
-              maxlength="15"
-              pattern="[0-9]*"
-              required
-            />
-            <button type="submit">Go</button>
-          </div>
-        </form>
-      </div>
-
-      <div class="credits">
-        <p>
-          OSINT Dashboard was developed by Andrew Flora, William Campbell, and
-          Santiago Colla.<br />
-          Github:
-          <b
-            ><a
-              href="https://github.com/campwill/osint-dashboard"
-              style="text-decoration: none; font-weight: bold"
-              >OSINT Dashboard</a
-            ></b
-          >
-        </p>
-      </div>
-    </div>
-
-    <div class="loading-screen" id="loadingScreen">
-      <div id="quoteContainer" class="quote-container"></div>
-      <div></div>
-    </div>
-
-    <script>
-      function showLoadingScreen() {
-        document.getElementById("loadingScreen").style.display = "flex";
-      }
-      window.addEventListener("pageshow", function (event) {
-        if (event.persisted) {
-          document.getElementById("loadingScreen").style.display = "none";
-        }
-      });
-      const quotes = [
-        "Information is being loaded.",
-        "Information is being loaded..",
-        "Information is being loaded...",
-      ];
-
-      function startQuoteCycle() {
-        const quoteContainer = document.getElementById("quoteContainer");
-        let index = 0;
-
-        function displayNextQuote() {
-          const quote = quotes[index];
-          quoteContainer.innerHTML = `<div class="quote">${quote}</div>`;
-          index = (index + 1) % quotes.length;
-        }
-
-        displayNextQuote();
-
-        const quoteInterval = setInterval(displayNextQuote, 1000);
-
-        setTimeout(() => {
-          clearInterval(quoteInterval);
-        }, 15000);
-      }
-      function checkFileSize(input) {
-        const maxFileSizeMB = 20;
-
-        if (input.files.length > 0) {
-          const fileSize = input.files[0].size;
-          const fileSizeMB = fileSize / (1024 * 1024);
-
-          if (fileSizeMB > maxFileSizeMB) {
-            alert("File size exceeds the maximum allowed size of 20 MB.");
-            input.value = "";
-          } else {
-          }
-        }
-      }
-    </script>
   </body>
 </html>
